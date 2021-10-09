@@ -20,7 +20,7 @@ app.get("/honk", function(req, res) {
   console.log("made it here");
   onStar
     .alert({
-      action: ["Honk"]
+      action: ["Flash"]
     })
     .then(() => {
       onStar.start;
@@ -31,16 +31,7 @@ app.get("/honk", function(req, res) {
 });
 
 app.get("/stop", function(req, res) {
-  console.log("made it here");
-  onStar
-    .alert({
-      action: ["Honk"]
-    })
-    .then(() => {
-      onStar.Cancelstart;
-      console.log("made it here now");
-    })
-    .catch(e => console.log(e));
+  onStar.cancelStart();
   res.send("Hello World");
 });
 
