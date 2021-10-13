@@ -20,7 +20,7 @@ app.get("/honk", function(req, res) {
   console.log("made it here");
   onStar
     .alert({
-      action: ["Flash"]
+      action: ["Honk"]
     })
     .then(() => {
       onStar.start;
