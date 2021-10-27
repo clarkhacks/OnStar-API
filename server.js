@@ -13,7 +13,10 @@ const config = {
   requestPollingIntervalSeconds: 6, // When checkRequestStatus is true, this is how often status check requests will be made
   requestPollingTimeoutSeconds: 60 // When checkRequestStatus is true, this is when requests while polling are considered timed out
 };
-
+const startItUp = async () => {
+ await onStar.start();
+  console.log("Command sent");
+};
 var onStar = OnStar.create(config);
 
 app.get("/flash", function(req, res) {
@@ -31,9 +34,7 @@ app.get("/flash", function(req, res) {
 
 app.get("/start", function(req, res) {
   console.log("Sending start command");
-async () => {
-    await onStar.start();
-  };
+  startItUp();
   res.send("Hello World");
 });
 
