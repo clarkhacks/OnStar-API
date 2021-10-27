@@ -16,15 +16,25 @@ const config = {
 
 var onStar = OnStar.create(config);
 
-app.get("/honk", function(req, res) {
-  console.log("made it here");
+app.get("/flash", function(req, res) {
+  console.log("Sending flash command");
   onStar
     .alert({
-      action: ["Honk"]
+      action: ["Flash"]
     })
     .then(() => {
       onStar.start;
-      console.log("made it here now");
+      console.log("Sent flash command);
+    })
+    .catch(e => console.log(e));
+  res.send("Hello World");
+});
+
+app.get("/start", function(req, res) {
+  console.log("Sending start command");
+  onStar.start()
+    .then(() => {
+      console.log("Sent start command");
     })
     .catch(e => console.log(e));
   res.send("Hello World");
