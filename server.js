@@ -23,8 +23,7 @@ app.get("/flash", function(req, res) {
       action: ["Flash"]
     })
     .then(() => {
-      onStar.start;
-      console.log("Sent flash command);
+      console.log("Sent flash command");
     })
     .catch(e => console.log(e));
   res.send("Hello World");
@@ -32,8 +31,10 @@ app.get("/flash", function(req, res) {
 
 app.get("/start", function(req, res) {
   console.log("Sending start command");
-  onStar.start()
+  onStar
+    .start()
     .then(() => {
+      startit();
       console.log("Sent start command");
     })
     .catch(e => console.log(e));
@@ -44,5 +45,7 @@ app.get("/stop", function(req, res) {
   onStar.cancelStart();
   res.send("Hello World");
 });
-
+async function startit() {
+  await onStar.start();
+}
 app.listen(3000);
