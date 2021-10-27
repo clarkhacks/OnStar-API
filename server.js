@@ -31,13 +31,9 @@ app.get("/flash", function(req, res) {
 
 app.get("/start", function(req, res) {
   console.log("Sending start command");
-  onStar
-    .start()
-    .then(() => {
-      startit();
-      console.log("Sent start command");
-    })
-    .catch(e => console.log(e));
+async () => {
+    await onStar.start();
+  };
   res.send("Hello World");
 });
 
