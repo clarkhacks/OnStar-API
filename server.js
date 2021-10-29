@@ -34,15 +34,15 @@ app.get("/flash", function(req, res) {
 
 app.get("/start", function(req, res) {
   console.log("Sending start command");
-  startItUp();
+  startit();
   res.send("Hello World");
 });
 
 app.get("/stop", function(req, res) {
-  onStar.cancelStart();
-  res.send("Hello World");
+  console.log(onStar.diagnostics());
+  res.send(onStar.diagnostics());
 });
 async function startit() {
-  await onStar.start();
+  await console.log(onStar.diagnostics());
 }
 app.listen(3000);
