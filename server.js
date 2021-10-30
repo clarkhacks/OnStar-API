@@ -13,6 +13,14 @@ const config = {
 };
 var onStar = OnStar.create(config);
 
+function ensureAuthenticated(req, res, next) {
+  if (req.query.code == process.env.PIN) {
+    return next();
+  } else {
+    res.send("403");
+  }
+}
+
 // start engine
 
 app.get("/ignition", function(req, res) {
@@ -22,32 +30,32 @@ app.get("/ignition", function(req, res) {
 });
 
 // stop engine
-app.get("/kill", function(req, res) {
+app.get("/kill", ensureAuthenticated, function(req, res) {
   killVehicle();
   res.send("Command Sent");
 });
 // flash alert
-app.get("/flash", function(req, res) {
+app.get("/flash", ensureAuthenticated, function(req, res) {
   alertVehicle("Flash");
   res.send("Command Sent");
 });
 // honk alert
-app.get("/honk", function(req, res) {
+app.get("/honk", ensureAuthenticated, function(req, res) {
   alertVehicle("Honk");
   res.send("Command Sent");
 });
 // lock
-app.get("/lock", function(req, res) {
+app.get("/lock", ensureAuthenticated, function(req, res) {
   lockVehicle();
   res.send("Command Sent");
 });
 // unlock
-app.get("/unlock", function(req, res) {
+app.get("/unlock", ensureAuthenticated, function(req, res) {
   unlockVehicle();
   res.send("Command Sent");
 });
 // vehicle info
-app.get("/info", function(req, res) {
+app.get("/info", ensureAuthenticated, function(req, res) {
   getDiagnostics();
   res.send("Command Sent");
 });
