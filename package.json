@@ -1,18 +1,13 @@
 {
-  "name": "hello-node",
+  "name": "onstar-webapp",
   "version": "0.0.1",
-  "description": "A simple Node app built on fastify, instantly up and running.",
+  "description": "remote control of your gm vehicle",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
   },
   "dependencies": {
-    "fastify": "^3.14.1",
-    "fastify-formbody": "^5.0.0",
-    "fastify-static": "^4.0.0",
-    "handlebars": "^4.7.7",
-    "point-of-view": "^4.14.0",
-    "onstarjs": "^2.2.4",
+    "onstarjs": "^2.3.0",
     "express": "^4.17.1"
   },
   "engines": {

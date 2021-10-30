@@ -16,12 +16,19 @@ var onStar = OnStar.create(config);
 function ensureAuthenticated(req, res, next) {
   if (req.query.code == process.env.PIN) {
     return next();
-  } else {
-    res.send("403");
+  }
+  if (req.path == "/"){
+    res.sendStatus(200);
+  }
+  else {
+    res.sendStatus(401);
   }
 }
 
 // start engine
+app.get("/", ensureAuthenticated, function(req, res) {
+  res.sendStatus(200);
+});
 
 app.get("/ignition", ensureAuthenticated, function(req, res) {
   console.log("Sending start command");
