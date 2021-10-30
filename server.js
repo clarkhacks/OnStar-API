@@ -1,12 +1,13 @@
 const OnStar = require("onstarjs");
 var express = require("express");
 var app = express();
+var queryPin;
 const config = {
   deviceId: "e81b6ad4-2860-11ec-9621-0242ac130002",
   vin: process.env.SECRET,
   username: process.env.USER,
   password: process.env.PASS,
-  onStarPin: process.env.PIN,
+  onStarPin: queryPin,
 
   // Optional
   checkRequestStatus: false, // When false, requests are complete when 'In Progress' (Much faster).
@@ -19,22 +20,10 @@ const startItUp = async () => {
 };
 var onStar = OnStar.create(config);
 
-app.get("/flash", function(req, res) {
-  console.log("Sending flash command");
-  onStar
-    .alert({
-      action: ["Flash"]
-    })
-    .then(() => {
-      console.log("Sent flash command");
-    })
-    .catch(e => console.log(e));
-  res.send("Hello World");
-});
-
 // start engine
 
 app.get("/ignition", function(req, res) {
+  
   console.log("Sending start command");
   startVehicle();
   res.send("Command Sent");
@@ -45,7 +34,26 @@ app.get("/kill", function(req, res) {
   killVehicle();
   res.send("Command Sent");
 });
-
+// flash alert
+app.get("/flash", function(req, res) {
+  alertVehicle("Flash");
+  res.send("Command Sent");
+});
+// honk alert
+app.get("/honk", function(req, res) {
+  alertVehicle("Honk");
+  res.send("Command Sent");
+});
+// lock
+app.get("/lock", function(req, res) {
+  lockVehicle();
+  res.send("Command Sent");
+});
+// unlock
+app.get("/unlock", function(req, res) {
+  unlockVehicle();
+  res.send("Command Sent");
+});
 // vehicle info
 app.get("/info", function(req, res) {
   getDiagnostics();
@@ -53,10 +61,39 @@ app.get("/info", function(req, res) {
 });
 // asyn functions
 async function startVehicle() {
-  console.log(await onStar.start());
+  try {
+    await onStar.start();
+  } catch (e) {
+    console.log("that failed", e);
+  }
 }
 async function killVehicle() {
-  console.log(await onStar.cancelStart());
+  try {
+    await onStar.cancelStart();
+  } catch (e) {
+    console.log("that failed", e);
+  }
+}
+async function alertVehicle(a) {
+  try {
+    await onStar.alert([a]);
+  } catch (e) {
+    console.log("that failed", e);
+  }
+}
+async function lockVehicle() {
+  try {
+    await onStar.lockDoor();
+  } catch (e) {
+    console.log("that failed", e);
+  }
+}
+async function unlockVehicle() {
+  try {
+    await onStar.unlockDoor();
+  } catch (e) {
+    console.log("that failed", e);
+  }
 }
 async function getDiagnostics() {
   var options = [
