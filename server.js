@@ -14,7 +14,7 @@ const config = {
   requestPollingTimeoutSeconds: 60 // When checkRequestStatus is true, this is when requests while polling are considered timed out
 };
 const startItUp = async () => {
- await onStar.start();
+  await onStar.start();
   console.log("Command sent");
 };
 var onStar = OnStar.create(config);
@@ -32,17 +32,28 @@ app.get("/flash", function(req, res) {
   res.send("Hello World");
 });
 
-app.get("/start", function(req, res) {
+// start engine
+
+app.get("/ignition", function(req, res) {
   console.log("Sending start command");
-  startit();
-  res.send("Hello World");
+  startVehicle();
+  res.send("Command Sent");
 });
 
-app.get("/stop", function(req, res) {
-  console.log(onStar.diagnostics());
-  res.send(onStar.diagnostics());
+// stop engine
+app.get("/kill", function(req, res) {
+  killVehicle();
+  res.send("Command Sent");
 });
-async function startit() {
-  await console.log(onStar.diagnostics());
+
+// asyn functions
+async function startVehicle() {
+  console.log(await onStar.start());
+}
+async function killVehicle() {
+  console.log(await onStar.cancelStart());
+}
+async function getDiagnostics() {
+  console.log(await onStar.cancelStart());
 }
 app.listen(3000);
