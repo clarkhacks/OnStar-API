@@ -46,6 +46,11 @@ app.get("/kill", function(req, res) {
   res.send("Command Sent");
 });
 
+// vehicle info
+app.get("/info", function(req, res) {
+  getDiagnostics();
+  res.send("Command Sent");
+});
 // asyn functions
 async function startVehicle() {
   console.log(await onStar.start());
@@ -54,6 +59,31 @@ async function killVehicle() {
   console.log(await onStar.cancelStart());
 }
 async function getDiagnostics() {
-  console.log(await onStar.cancelStart());
+  var options = [
+    "ENGINE COOLANT TEMP",
+    "ENGINE RPM",
+    "LAST TRIP FUEL ECONOMY",
+    "EV ESTIMATED CHARGE END",
+    "EV BATTERY LEVEL",
+    "OIL LIFE",
+    "EV PLUG VOLTAGE",
+    "LIFETIME FUEL ECON",
+    "HOTSPOT CONFIG",
+    "LIFETIME FUEL USED",
+    "ODOMETER",
+    "HOTSPOT STATUS",
+    "TIRE PRESSURE",
+    "AMBIENT AIR TEMPERATURE",
+    "LAST TRIP DISTANCE",
+    "FUEL TANK INFO",
+    "HANDS FREE CALLING",
+    "VEHICLE RANGE"
+  ];
+
+  try {
+    console.log(await onStar.diagnostics(options));
+  } catch (e) {
+    console.log("that failed", e);
+  }
 }
 app.listen(3000);
