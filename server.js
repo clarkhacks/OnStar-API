@@ -23,7 +23,7 @@ function ensureAuthenticated(req, res, next) {
 
 // start engine
 
-app.get("/ignition", function(req, res) {
+app.get("/ignition", ensureAuthenticated, function(req, res) {
   console.log("Sending start command");
   startVehicle();
   res.send("Command Sent");
