@@ -16,58 +16,71 @@ const config = {
 
 var onStar = OnStar.create(config);
 
-  if (req.query.code == process.env.PIN) {
-    console.log("Sending start command");
-  startVehicle();
-  res.send("Command Sent");
-}
-else {
-  res.send("403")
-}
-
 // start engine
 
 app.get("/ignition", function(req, res) {
-
   if (req.query.code == process.env.PIN) {
     console.log("Sending start command");
-  startVehicle();
-  res.send("Command Sent");
-}
-else {
-  res.send("403")
-}
+    startVehicle();
+    res.send("Command Sent");
+  } else {
+    res.send("403");
+  }
 });
 
 // stop engine
 app.get("/kill", function(req, res) {
-  killVehicle();
-  res.send("Command Sent");
+  if (req.query.code == process.env.PIN) {
+    killVehicle();
+    res.send("Command Sent");
+  } else {
+    res.send("403");
+  }
 });
 // flash alert
 app.get("/flash", function(req, res) {
-  alertVehicle("Flash");
-  res.send("Command Sent");
+  if (req.query.code == process.env.PIN) {
+    alertVehicle("Flash");
+    res.send("Command Sent");
+  } else {
+    res.send("403");
+  }
 });
 // honk alert
 app.get("/honk", function(req, res) {
-  alertVehicle("Honk");
-  res.send("Command Sent");
+  if (req.query.code == process.env.PIN) {
+    alertVehicle("Honk");
+    res.send("Command Sent");
+  } else {
+    res.send("403");
+  }
 });
 // lock
 app.get("/lock", function(req, res) {
-  lockVehicle();
-  res.send("Command Sent");
+  if (req.query.code == process.env.PIN) {
+    lockVehicle();
+    res.send("Command Sent");
+  } else {
+    res.send("403");
+  }
 });
 // unlock
 app.get("/unlock", function(req, res) {
-  unlockVehicle();
-  res.send("Command Sent");
+  if (req.query.code == process.env.PIN) {
+    unlockVehicle();
+    res.send("Command Sent");
+  } else {
+    res.send("403");
+  }
 });
 // vehicle info
 app.get("/info", function(req, res) {
-  getDiagnostics();
-  res.send("Command Sent");
+  if (req.query.code == process.env.PIN) {
+    getDiagnostics();
+    res.send("Command Sent");
+  } else {
+    res.send("403");
+  }
 });
 // asyn functions
 async function startVehicle() {
