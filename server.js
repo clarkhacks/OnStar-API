@@ -7,113 +7,82 @@ const config = {
   username: process.env.USER,
   password: process.env.PASS,
   onStarPin: process.env.PIN,
-
-  // Optional
   checkRequestStatus: false, // When false, requests are complete when 'In Progress' (Much faster).
   requestPollingIntervalSeconds: 6, // When checkRequestStatus is true, this is how often status check requests will be made
   requestPollingTimeoutSeconds: 60 // When checkRequestStatus is true, this is when requests while polling are considered timed out
 };
-
 var onStar = OnStar.create(config);
 
 // start engine
 
 app.get("/ignition", function(req, res) {
-  if (req.query.code == process.env.PIN) {
-    console.log("Sending start command");
-    startVehicle();
-    res.send("Command Sent");
-  } else {
-    res.send("403");
-  }
+  console.log("Sending start command");
+  startVehicle();
+  res.send("Command Sent");
 });
 
 // stop engine
 app.get("/kill", function(req, res) {
-  if (req.query.code == process.env.PIN) {
-    killVehicle();
-    res.send("Command Sent");
-  } else {
-    res.send("403");
-  }
+  killVehicle();
+  res.send("Command Sent");
 });
 // flash alert
 app.get("/flash", function(req, res) {
-  if (req.query.code == process.env.PIN) {
-    alertVehicle("Flash");
-    res.send("Command Sent");
-  } else {
-    res.send("403");
-  }
+  alertVehicle("Flash");
+  res.send("Command Sent");
 });
 // honk alert
 app.get("/honk", function(req, res) {
-  if (req.query.code == process.env.PIN) {
-    alertVehicle("Honk");
-    res.send("Command Sent");
-  } else {
-    res.send("403");
-  }
+  alertVehicle("Honk");
+  res.send("Command Sent");
 });
 // lock
 app.get("/lock", function(req, res) {
-  if (req.query.code == process.env.PIN) {
-    lockVehicle();
-    res.send("Command Sent");
-  } else {
-    res.send("403");
-  }
+  lockVehicle();
+  res.send("Command Sent");
 });
 // unlock
 app.get("/unlock", function(req, res) {
-  if (req.query.code == process.env.PIN) {
-    unlockVehicle();
-    res.send("Command Sent");
-  } else {
-    res.send("403");
-  }
+  unlockVehicle();
+  res.send("Command Sent");
 });
 // vehicle info
 app.get("/info", function(req, res) {
-  if (req.query.code == process.env.PIN) {
-    getDiagnostics();
-    res.send("Command Sent");
-  } else {
-    res.send("403");
-  }
+  getDiagnostics();
+  res.send("Command Sent");
 });
 // asyn functions
 async function startVehicle() {
   try {
-    await onStar.start();
+    console.log(await onStar.start());
   } catch (e) {
     console.log("that failed", e);
   }
 }
 async function killVehicle() {
   try {
-    await onStar.cancelStart();
+    console.log(await onStar.cancelStart());
   } catch (e) {
     console.log("that failed", e);
   }
 }
 async function alertVehicle(a) {
   try {
-    await onStar.alert([a]);
+    console.log(await onStar.alert([a]));
   } catch (e) {
     console.log("that failed", e);
   }
 }
 async function lockVehicle() {
   try {
-    await onStar.lockDoor();
+    console.log(await onStar.lockDoor());
   } catch (e) {
     console.log("that failed", e);
   }
 }
 async function unlockVehicle() {
   try {
-    await onStar.unlockDoor();
+    console.log(await onStar.unlockDoor());
   } catch (e) {
     console.log("that failed", e);
   }
